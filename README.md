@@ -1,4 +1,7 @@
-# ToDoForYou
+<div style="display: flex; align-items: center; justify-content: center;">
+    <img src="https://todoforyou.ru/img/logoGitHub.png" alt="logo" width="50" style="display: inline"> <h1>ToDoForYou</h1>
+</div>
+
 ### Hello, dear user,   
 
 **Our web-service ready to provide you comfortable to-do task list with analytics of the tasks you have completed.  
