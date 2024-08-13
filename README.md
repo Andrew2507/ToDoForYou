@@ -4,9 +4,8 @@
 **Our web-service ready to provide you comfortable to-do task list with analytics of the tasks you have completed.  
 _ToDoForYou has an intuitive interface, simple design._**
 
-## This github repository includes:
+## 📚 This github repository includes:
 
->[!TIP]
 >- Root directory
 >   - __core__
 >     - __api__
@@ -27,9 +26,13 @@ _ToDoForYou has an intuitive interface, simple design._**
 >   - __index.php__
 >   - __todo.php__
 
+## 🛠️ Getting Started
+#### Follow this link 
+
+
 <sub> This service was created during the Innocamp hackathon.</sub>
 
-### Worked on the project:
+## 👥 Worked on the project:
 - Andrew Mikhailovich Avvakumov - IT-dev manager, AIProgrammer;  
 - Dmitry Eduardovich Abramov - Main Programmer;  
 - Nikolai Nikolaevich Isakov - Programmer;  
