@@ -38,6 +38,50 @@ function getTasksByStatus($status) {
     return [];
 }
 
+function getTaskStats($userID) {
+    try {
+        $mysqli = getCore()->getConn();
+
+        $sql = "SELECT COUNT(*) as total FROM tasks WHERE id = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $totalTasks = $result->fetch_assoc()['total'];
+
+        if ($totalTasks == 0) {
+            return ['done' => 0, 'in_progress' => 0, 'waiting' => 0];
+        }
+
+        $sql = "SELECT COUNT(*) as done FROM tasks WHERE TaskStatus = 3 AND id = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $doneTasks = $result->fetch_assoc()['done'];
+
+        $sql = "SELECT COUNT(*) as in_progress FROM tasks WHERE TaskStatus = 2 AND id = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("i", $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $inProgressTasks = $result->fetch_assoc()['in_progress'];
+
+        $donePercent = ($doneTasks / $totalTasks) * 100;
+        $inProgressPercent = ($inProgressTasks / $totalTasks) * 100;
+        $waitingPercent = 100 - $donePercent - $inProgressPercent;
+
+        return [
+            'done' => round($donePercent),
+            'in_progress' => round($inProgressPercent),
+            'waiting' => round($waitingPercent)
+        ];
+
+    } catch (mysqli_sql_exception $ignored) {}
+
+    return ['done' => 0, 'in_progress' => 0, 'waiting' => 0];
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['task_id'])) {
     $task_id = $_POST['task_id'];
 
@@ -57,10 +101,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['task_id'])) {
 
     try {
         $mysqli = getCore()->getConn();
-        $sql = "UPDATE tasks SET TaskStatus = 3 WHERE TaskText = ? AND id = ?";
+
+        $sql = "SELECT TaskStatus FROM tasks WHERE TaskText = ? AND id = ?";
         $stmt = $mysqli->prepare($sql);
         $id = $_SESSION['id'];
         $stmt->bind_param("si", $task_id, $id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $task = $result->fetch_assoc();
+        $currentStatus = $task['TaskStatus'];
+
+        $newStatus = $currentStatus;
+        if ($currentStatus == 1) {
+            $newStatus = 2;
+        } else if ($currentStatus == 2) {
+            $newStatus = 3;
+        }
+
+        $sql = "UPDATE tasks SET TaskStatus = ? WHERE TaskText = ? AND id = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("isi", $newStatus, $task_id, $id);
         $stmt->execute();
 
         header("Location: /todo.php");
@@ -85,6 +146,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['task_id'])) {
     header("Location: /todo.php");
     exit;
 }
+
+$stats = getTaskStats($_SESSION['id']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -212,25 +275,93 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['task_id'])) {
             <input class="button-form" value="Подтвердить" name="modal" type="submit">
         </form>
     </div>
+
+    <div class="stat">
+        <div class="block">
+            <div class="progress-pie-chart" data-percent="<?= $stats['waiting'] ?>">
+                <div class="ppc-progress">
+                    <div class="ppc-progress-fill"></div>
+                </div>
+                <div class="ppc-percents">
+                    <div class="pcc-percents-wrapper">
+                        <span><?= $stats['waiting'] ?>%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text">В ожидании</div>
+        </div>
+
+        <div class="block">
+            <div class="progress-pie-chart" data-percent="<?= $stats['in_progress'] ?>">
+                <div class="ppc-progress">
+                    <div class="ppc-progress-fill"></div>
+                </div>
+                <div class="ppc-percents">
+                    <div class="pcc-percents-wrapper">
+                        <span><?= $stats['in_progress'] ?>%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text">В работе</div>
+        </div>
+
+        <div class="block">
+            <div class="progress-pie-chart" data-percent="<?= $stats['done'] ?>">
+                <div class="ppc-progress">
+                    <div class="ppc-progress-fill"></div>
+                </div>
+                <div class="ppc-percents">
+                    <div class="pcc-percents-wrapper">
+                        <span><?= $stats['done'] ?>%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text">Выполнено</div>
+        </div>
+    </div>
 </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const addButton = document.querySelector('.add');
-            const modal = document.querySelector('.modal');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-            addButton.addEventListener('click', function() {
-                modal.style.display = 'block';
-            });
+<script>
+    $(function(){
+        $('.progress-pie-chart').each(function() {
+            var $ppc = $(this),
+                percent = parseInt($ppc.data('percent')),
+                deg = 360 * percent / 100;
 
-            document.addEventListener('keydown', function(event) {
-                if (event.key === 'Escape') {
-                    modal.style.display = 'none';
-                }
-            });
+            if (percent > 50) {
+                $ppc.addClass('gt-50');
+            }
+
+            $ppc.find('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
+            $ppc.find('.ppc-percents span').html(percent + '%');
         });
-    </script>
+    });
+</script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addButton = document.querySelector('.add');
+        const modal = document.querySelector('.modal');
+
+        addButton.addEventListener('click', function() {
+            modal.style.display = 'block';
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!modal.querySelector('.wrapper').contains(event.target) && event.target !== addButton) {
+                modal.style.display = 'none';
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

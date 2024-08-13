@@ -67,6 +67,7 @@ class Core {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $_SESSION['id'] = $row['id'];
+                $_SESSION['username'] = $row['username'];
             } else die(512);
         }
     }

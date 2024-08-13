@@ -149,33 +149,69 @@
     z-index: 9999;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-}
 
-.app .modal .wrapper {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 15px;
-    background: rgba(128, 128, 128, 0.3);
-    width: 40%;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    text-align: center;
-    animation: slideIn 1s forwards;
-}
+    .wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 15px;
+        background: rgba(128, 128, 128, 0.3);
+        width: 40%;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        text-align: center;
+        animation: slideIn 1s forwards;
 
-.app .modal .wrapper .name {
-    margin: 5% 0;
-    font-size: 2rem;
-}
+        .name {
+            margin: 5% 0;
+            font-size: 2rem;
+        }
 
-.app .modal .wrapper .bottom {
-    width: 80%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+        .bottom {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+
+            .right {
+                margin-right: 14.5px;
+                font-size: 16px;
+                select {
+                    font-size: 16px;
+                =: 38px;
+                }
+            }
+        }
+
+        .input,
+        textarea {
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            border-bottom: 2px solid #ccc;
+            border-top: 2px solid transparent;
+            transition: all 0.2s ease;
+            outline: none;
+            border: none;
+        }
+
+        .button-form {
+            margin: 3% 0;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 400;
+            padding: 1.5% 4%;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            background-color: #033ee0b3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+    }
 }
 
 .flex {
@@ -184,28 +220,150 @@
     align-items: center;
 }
 
-.app .input,
-.app textarea {
-    box-sizing: border-box;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border-bottom: 2px solid #ccc;
-    border-top: 2px solid transparent;
-    transition: all 0.2s ease;
-    outline: none;
-    border: none;
+.progress-pie-chart {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #E5E5E5;
+    position: relative;
+    margin: 0 auto 0;
 }
 
-.app .button-form {
-    margin: 3% 0;
-    border: none;
-    color: #fff;
-    font-size: 1.4rem;
-    font-weight: 400;
-    letter-spacing: 1px;
-    border-radius: 6px;
-    background-color: #033ee0b3;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.progress-pie-chart.gt-50 {
+    background-color: #e10000;
+}
+
+.ppc-progress {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+    clip: rect(0px, 100px, 100px, 50px);
+}
+
+.ppc-progress-fill {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+    width: 100px;
+    height: 100px;
+    clip: rect(0px, 50px, 100px, 0px);
+    background: #00922a;
+    transform: rotate(60deg);
+}
+
+.progress-pie-chart.gt-50 .ppc-progress {
+    clip: rect(0px, 50px, 100px, 0px);
+}
+
+.progress-pie-chart.gt-50 .ppc-progress .ppc-progress-fill {
+    clip: rect(0px, 100px, 100px, 50px);
+    background: #E5E5E5;
+}
+
+.ppc-percents {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    left: calc(50% - 43.48px);
+    top: calc(50% - 43.48px);
+    width: calc(100px / 1.15);
+    height: calc(100px / 1.15);
+    background: #262626;
+    text-align: center;
+    display: table;
+}
+
+.ppc-percents span {
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+.pcc-percents-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.progress-pie-chart.color1 .ppc-progress-fill {
+    background: #c90000;
+}
+
+.stat {
+    display: flex;
+    margin: 5% 10%;
+    padding: 1% 0;
+    background-color: var(--background-gray);
+    border-radius: 5px;
+
+    .block {
+        text-align: center;
+        margin: 0 auto 0;
+
+        .text {
+            margin-top: 20%;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .app .table {
+        margin-top: 5%;
+
+        .grid {
+            grid-template-columns: unset;
+            width: 100%;
+            padding: 4% 0;
+
+            .column {
+                width: 94%;
+                margin:  auto;
+            }
+        }
+    }
+
+    .app .modal .wrapper {
+        width: 80%;
+
+        .bottom {
+            display: block;
+
+            .right {
+                margin-right: 14.5px;
+                font-size: 16px;
+
+                select {
+                    font-size: unset;
+                    margin: unset;
+                    width: 103%;
+                }
+            }
+        }
+
+        select {
+            width: 86%;
+        }
+
+        .input,
+        textarea {
+            width: 100% !important;
+            margin-left: unset;
+            margin: unset;
+        }
+
+        .flex {
+            width: 100% !important;
+            margin-left: unset !important;
+        }
+    }
+
+    .app .stat {
+        padding: 5% 0;
+    }
 }

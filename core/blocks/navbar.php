@@ -5,14 +5,24 @@
             <div class="name">ToDoForYou</div>
         </a>
         <div class="nav-buttons">
-            <a href="/" class="nav-button active">Главная</a>
             <?
             if (isAuth()) echo '<a href="/todo.php" class="nav-button">ToDo</a>';
             ?>
+
+            <a href="/price.php" class="nav-button active">Тарифы</a>
         </div>
     </div>
 
-    <a href="/auth.php" class="auth">
-        <div class="login">Личный кабинет</div>
+    <?
+    if (isAuth()) {
+        $href = "/todo.php";
+        $text = $_SESSION['username'];
+    } else {
+        $href = "/auth.php";
+        $text = "Личный кабинет";
+    }
+    ?>
+    <a href="<?= $href ?>" class="auth">
+        <div class="login"><?= $text ?></div>
     </a>
 </header>

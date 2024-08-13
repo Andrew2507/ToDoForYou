@@ -4,8 +4,6 @@ class ZukiChat {
     private $api_key;
     private $api_backup_key;
     private $api_endpoint = 'https://zukijourney.xyzbot.net/v1/chat/completions';
-    private $api_endpoint_unfiltered = 'https://zukijourney.xyzbot.net/unf/chat/completions';
-    private $api_endpoint_backup = 'https://thirdparty.webraft.in/v1/chat/completions';
     private $system_prompt;
     private $model;
     private $temperature;
@@ -18,7 +16,7 @@ class ZukiChat {
         $this->model = $model;
     }
 
-    private function sendRequest($user_name, $user_message, $endpoint) {
+    private function sendRequest($user_message, $endpoint) {
         $data = [
             "model" => $this->model,
             "messages" => [
@@ -51,14 +49,14 @@ class ZukiChat {
     }
 
     public function sendMessage($user_name, $user_message) {
-        return $this->sendRequest($user_name, $user_message, $this->api_endpoint);
+        return $this->sendRequest($user_message, $this->api_endpoint);
     }
 }
 
 function getTag($config, $text)
 {
     try {
-        $question = "{$text}, это задача в to-do list определи тип этой задачи и ответь НЕ БОЛЕЕ ЧЕМ ДВУМЯ СЛОВАМИ например: personal, work, school, programming, error, fix, и так далее. на английском. В случае если не распознана задача выводи task";
+        $question = "{$text}, это задача в to-do list определи тип этой задачи и ответь НЕ БОЛЕЕ ЧЕМ ДВУМЯ СЛОВАМИ например: personal, work, school, programming, error, fix, и подобные этим. на английском. В случае если не распознана задача выводи task";
         $api_key = $config["site"]["api"];
         $zuki_chat = new ZukiChat($api_key);
 
