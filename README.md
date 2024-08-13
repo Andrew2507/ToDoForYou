@@ -27,7 +27,18 @@ _ToDoForYou has an intuitive interface, simple design._**
 >   - __todo.php__
 
 ## 🛠️ Getting Started
-#### Follow this link 
+
+>###  Follow this [__link__](https://todoforyou.ru/)
+>#### Register and login on the site:
+>   ![Image of registrate](https://todoforyou.ru/img/HowToRegistrate.JPG)
+>#### Create a new task:
+>   ![Image new task](https://todoforyou.ru/img/NewTask.JPG)
+>#### Set task settings:
+>   ![Set of new task](https://todoforyou.ru/img/TaskSet.JPG)
+>#### Enjoy your tasks:
+>   ![Enjoy](https://todoforyou.ru/img/Enjoy.JPG)
+
+
 
 
 <sub> This service was created during the Innocamp hackathon.</sub>
