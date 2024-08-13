@@ -1,0 +1,211 @@
+.app .table {
+    margin: 0 10%;
+    background-color: var(--background-gray);
+    border-radius: 5px;
+
+    .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 96%;
+        padding: 1% 2%;
+        border-bottom: solid var(--color-active) 3px;
+
+        .text {
+            font-size: 2rem;
+        }
+
+        .add {
+            margin: 2%;
+            border-radius: 5px;
+            background-color: #004aa0;
+            padding: 0 0.6% 2px;
+            cursor: pointer;
+        }
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
+        gap: 10px;
+        width: 98%;
+        padding: 1%;
+
+        .todo {
+            background-color: var(--table-todo);
+
+            .type {
+                background-color: var(--table-todo-active);
+            }
+
+            .task {
+                background-color: var(--table-todo-active);
+            }
+        }
+
+        .programming {
+            background-color: var(--table-progress);
+
+            .type {
+                background-color: var(--table-progress-active);
+            }
+
+            .task {
+                background-color: var(--table-progress-active);
+            }
+        }
+
+        .done {
+            background-color: var(--table-done);
+
+            .type {
+                background-color: var(--table-done-active);
+            }
+
+            .task {
+                background-color: var(--table-done-active);
+            }
+        }
+
+        .column {
+            flex: 0 0 auto;
+            margin-right: 10px;
+            box-sizing: content-box;
+            width: 320px;
+            height: max-content;
+            border-radius: 5px;
+
+            .type {
+                width: 86%;
+                padding: 1% 7%;
+                font-size: 1.2rem;
+                border-bottom: solid var(--background-gray) 2px;
+                border-radius: 5px 5px 0 0;
+            }
+
+            .tasks {
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-bottom: 5px;
+
+                .task {
+                    margin-top: 3%;
+                    margin-bottom: 3%;
+                    padding-bottom: 0.3%;
+                    border-radius: 5px;
+
+                    .flex {
+                        padding: 0 5%;
+                        border-bottom: solid var(--background-gray) 2px;
+
+                        .remove {
+                            margin: 2%;
+                            border-radius: 5px;
+                            background-color: var(--background-gray);
+                            padding: 0 7px 2px;
+                            cursor: pointer;
+                            border: none;
+                            outline: none;
+                            color: var(--color-white);
+                        }
+                    }
+                    .name {
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        padding: 2.5%;
+                    }
+
+                    .description {
+                        padding: 2.5%;
+                    }
+
+                    .tags {
+                        display: flex;
+                        margin: 2.5%;
+                        align-items: center;
+                        border-radius: 5px;
+                        background-color: var(--background-gray);
+
+                        .tag {
+                            margin: 2%;
+                            border-radius: 5px;
+                            background-color: #004aa0;
+                            padding: 0 1.5%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.app .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.18);
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.app .modal .wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    background: rgba(128, 128, 128, 0.3);
+    width: 40%;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    text-align: center;
+    animation: slideIn 1s forwards;
+}
+
+.app .modal .wrapper .name {
+    margin: 5% 0;
+    font-size: 2rem;
+}
+
+.app .modal .wrapper .bottom {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app .input,
+.app textarea {
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid transparent;
+    transition: all 0.2s ease;
+    outline: none;
+    border: none;
+}
+
+.app .button-form {
+    margin: 3% 0;
+    border: none;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    background-color: #033ee0b3;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

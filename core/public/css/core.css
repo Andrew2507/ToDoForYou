@@ -1,0 +1,213 @@
+@font-face {
+    font-family: Lyon-Text;
+    font-style: normal;
+    font-weight: 400;
+    src: url(/fonts/Lyon.woff) format("woff")
+}
+
+@font-face {
+    font-family: Lyon-Text;
+    font-style: italic;
+    font-weight: 400;
+    src: url(/fonts/Lyon.woff) format("woff")
+}
+
+@font-face {
+    font-family: Lyon-Text;
+    font-style: normal;
+    font-weight: 600;
+    src: url(/fonts/Lyon.woff) format("woff")
+}
+
+@font-face {
+    font-family: Lyon-Text;
+    font-style: italic;
+    font-weight: 600;
+    src: url(/fonts/Lyon.woff) format("woff")
+}
+
+@font-face {
+    font-family: iawriter-mono;
+    font-style: normal;
+    font-weight: 400;
+    src: url(/fonts/ia-writer-mono-latin-400-normal.ttf) format("tff")
+}
+
+@font-face {
+    font-family: iawriter-mono;
+    font-style: italic;
+    font-weight: 400;
+    src: url(/fonts/ia-writer-mono-latin-400-italic.ttf) format("tff")
+}
+
+@font-face {
+    font-family: iawriter-mono;
+    font-style: normal;
+    font-weight: 600;
+    src: url(/fonts/ia-writer-mono-latin-700-normal.ttf) format("tff")
+}
+
+@font-face {
+    font-family: iawriter-mono;
+    font-style: italic;
+    font-weight: 600;
+    src: url(/fonts/ia-writer-mono-latin-700-italic.ttf) format("tff")
+}
+
+:root {
+    --filter-white: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);;
+    --background-gray: rgba(28, 28, 28, 0.82);
+    --gray-filter: brightness(0) saturate(100%) invert(45%) sepia(0%) saturate(47%) hue-rotate(236deg) brightness(89%) contrast(91%);
+    --blue-filter: brightness(0) saturate(100%) invert(38%) sepia(30%) saturate(7469%) hue-rotate(216deg) brightness(101%) contrast(91%);
+    --color-white: #ffffff;
+    --color-active: rgba(128, 128, 128, 0.3);
+
+    --table-todo: rgb(36 30 29);
+    --table-todo-active: rgb(62 40 37);
+
+    --table-progress: rgb(27 31 34);
+    --table-progress-active: rgb(27 45 56);
+
+    --table-done: rgb(29 34 32);
+    --table-done-active: rgb(35 49 42);
+}
+
+a {
+    text-decoration: unset;
+    color: var(--color-white);
+}
+
+body {
+    position: relative;
+    margin: 0;
+    width: 100vw;
+    height: 100%;
+    color: var(--color-white);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: auto;
+    background-color: rgb(32 30 30 / 59%);
+    background-image: url("/img/bg.png");
+    touch-action: none;
+    background-size: cover;
+    background-position: 50% 50%;
+    -webkit-user-select: none;
+    overflow-x: hidden;
+}
+
+body:before {
+    content: '';
+    background-color: rgba(0,0,0,0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.navbar {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    color: var(--color-white);
+    border-bottom: solid var(--color-white) 3px;
+    font-size: 1.2rem;
+
+    .left {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 35%;
+
+        .name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-right: 15%;
+
+            .logo {
+                width: 3rem;
+                aspect-ratio: 1 / 1;
+                background-image: url("/img/logo.png");
+                background-size: cover;
+                filter: var(--blue-filter);
+                margin-right: 5%;
+            }
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 60%;
+        }
+    }
+
+    .auth {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1.5% 1px 1%;
+        margin: 0.7% 0;
+        border-radius: 8px;
+        background-color: rgba(3, 62, 224, 0.7);
+
+        .login,
+        .register {
+            margin: 2%;
+            white-space: pre;
+        }
+    }
+;
+    margin-bottom: 3%;
+    position: relative;
+    z-index: 10;
+}
+
+.app {
+    position: relative;
+    height: 100vh;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+    -webkit-user-select: none;
+    z-index: 1;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.app .header {
+    padding: 0 10%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+        width: 50%;
+
+        .name {
+            font-size: 2.4rem;
+        }
+
+        .description {
+            font-size: 1.5rem;
+        }
+    }
+
+    .right {
+        width: 20%;
+        aspect-ratio: 1 / 1;
+        background-image: url("/img/logo.png");
+        background-size: cover;
+        filter: var(--blue-filter);
+    }
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    width: 80%;
+}
